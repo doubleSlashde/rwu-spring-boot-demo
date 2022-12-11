@@ -50,7 +50,7 @@ class RwuSpringBootDemoApplicationTests {
 
 /**
  * Subclass of {@link GreetRepository} which overrides the getGreeting() method.
- * Will be used in Spring Boot Test instead of the "real" one.
+ * Will be used in @SpringBootTest instead of the "real" one.
  */
 class TestGreetRepository extends GreetRepository {
 
