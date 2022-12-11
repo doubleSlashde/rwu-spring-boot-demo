@@ -1,3 +1,5 @@
+[![Java CI with Maven](https://github.com/doubleSlashde/rwu-spring-boot-demo/actions/workflows/maven.yml/badge.svg)](https://github.com/doubleSlashde/rwu-spring-boot-demo/actions/workflows/maven.yml)
+
 # RWU Sonftwareengineering - Spring Boot Demo
 
 Demoprojekt für den Kurs Softwareengineering an der RWU
