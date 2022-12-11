@@ -9,12 +9,17 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(properties = "spring.main.allow-bean-definition-overriding=true",
 webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RwuSpringBootDemoApplicationTests {
+
+    @Container
+    public static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14.5");
 
     @TestConfiguration
     static class TestConfig {
