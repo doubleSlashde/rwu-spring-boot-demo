@@ -50,7 +50,7 @@ class RwuSpringBootDemoApplicationTests {
 
     @Test
     void testRepoChangedForTest() {
-        String url = String.format("http://localhost:%s/greet", port);
+        String url = "http://localhost:%s/greet".formatted(port);
 
         final String json = restTemplate.getForObject(url, String.class);
 

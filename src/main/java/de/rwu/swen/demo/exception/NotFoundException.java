@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class NotFoundException extends Exception {
 
     public NotFoundException(Long id) {
-        super(String.format("Student with ID '%d' does not exist", id));
+        super("Student with ID '%d' does not exist".formatted(id));
     }
 
 }

@@ -23,20 +23,20 @@ public class StudentController {
     }
 
     @GetMapping(path = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Page<Student> getStudentsPaged(@RequestParam("page") int page) {
+    public Page<Student> getStudentsPaged(@RequestParam int page) {
         // select 10 students from page 'page' (page count starts with 0)
         return repository.findAllByOrderById(PageRequest.of(page, 10));
     }
 
     @GetMapping(path = "/student/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Student getStudent(@PathVariable("id") Long id) throws NotFoundException {
+    public Student getStudent(@PathVariable Long id) throws NotFoundException {
         return repository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
     }
 
     @GetMapping(path = "/student/search/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Student> findStudentByName(@PathVariable("name") String name) {
+    public List<Student> findStudentByName(@PathVariable String name) {
         return repository.findByFirstNameOrLastName(name, name);
     }
 

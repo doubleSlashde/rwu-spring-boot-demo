@@ -5,6 +5,7 @@ Demoprojekt für den Kurs Softwareengineering an der RWU
 **Voraussetzungen:**
 
 * Java 17
+* Spring Boot 3
 * Maven 3
 * Docker
 
