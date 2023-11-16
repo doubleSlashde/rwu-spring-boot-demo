@@ -1,4 +1,4 @@
-# RWU Sonftwareengineering - Spring Boot Demo
+# RWU Softwareengineering - Spring Boot Demo
 
 Demoprojekt für den Kurs Softwareengineering an der RWU
 
