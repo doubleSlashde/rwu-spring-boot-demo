@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RwuSpringBootDemoApplicationTests {
 
     @Container
-    public static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:14.5");
+    public static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:16");
 
     /**
      * Prevent DB entries from being created
