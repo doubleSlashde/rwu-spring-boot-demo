@@ -29,7 +29,7 @@ public class StudentController {
     }
 
     @GetMapping(path = "/student/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Student getStudent(@PathVariable Long id) throws NotFoundException {
+    public Student getStudent(@PathVariable Long id) {
         return repository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException(id));
