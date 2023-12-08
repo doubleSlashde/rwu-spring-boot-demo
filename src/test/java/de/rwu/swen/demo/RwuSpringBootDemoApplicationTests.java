@@ -11,6 +11,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.jdbc.Sql;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 
@@ -71,6 +72,18 @@ class RwuSpringBootDemoApplicationTests {
                 .body("greeting", equalTo("Hello Spring Boot Test!"));
     }
 
+    @Test
+    @Sql("/sql/clear_student_table.sql")
+    @Sql("/sql/insert_students.sql")
+    void studentsPagination() {
+
+        given()
+                .when()
+                .get("/students?page=0")
+                .then().assertThat()
+                .statusCode(HTTP_OK)
+                .body("content.size()", equalTo(3));
+    }
 }
 
 /**

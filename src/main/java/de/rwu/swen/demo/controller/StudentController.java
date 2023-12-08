@@ -1,5 +1,6 @@
 package de.rwu.swen.demo.controller;
 
+import de.rwu.swen.demo.config.PagingProperties;
 import de.rwu.swen.demo.entity.Student;
 import de.rwu.swen.demo.exception.NotFoundException;
 import de.rwu.swen.demo.repo.StudentRepository;
@@ -16,16 +17,19 @@ import java.util.List;
 @RestController
 public class StudentController {
 
+    private final PagingProperties pagingProperties;
+
     private final StudentRepository repository;
 
-    public StudentController(StudentRepository repository) {
+    public StudentController(PagingProperties pagingProperties, StudentRepository repository) {
+        this.pagingProperties = pagingProperties;
         this.repository = repository;
     }
 
     @GetMapping(path = "/students", produces = MediaType.APPLICATION_JSON_VALUE)
     public Page<Student> getStudentsPaged(@RequestParam int page) {
         // select 10 students from page 'page' (page count starts with 0)
-        return repository.findAllByOrderById(PageRequest.of(page, 10));
+        return repository.findAllByOrderById(PageRequest.of(page, pagingProperties.getPageSize()));
     }
 
     @GetMapping(path = "/student/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
