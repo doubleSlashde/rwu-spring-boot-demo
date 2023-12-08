@@ -19,7 +19,7 @@ Anwendung bauen:
 
 PostgreSQL in Docker starten:
 
-``` docker run --name postgres-rwu -p 5432:5432 -e POSTGRES_PASSWORD=pgsqlpw -d postgres:14.5```
+```docker run --name postgres-rwu -p 5432:5432 -e POSTGRES_PASSWORD=pgsqlpw -d postgres:16```
 
 Anwendung starten (Projektverzeichnis):
 
