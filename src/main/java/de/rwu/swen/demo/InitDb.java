@@ -28,8 +28,8 @@ public class InitDb implements CommandLineRunner {
             return;
         }
 
+        final Faker faker = new Faker(Locale.GERMAN);
         for (int i = 0; i < 100; i++) {
-            final Faker faker = new Faker(Locale.GERMAN);
             Student s = new Student();
             s.setFirstName(faker.name().firstName());
             s.setLastName(faker.name().lastName());
