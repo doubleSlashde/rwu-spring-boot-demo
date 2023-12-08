@@ -1,29 +1,34 @@
 package de.rwu.swen.demo;
 
 import de.rwu.swen.demo.repo.GreetRepository;
+import io.restassured.RestAssured;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
+import org.springframework.http.HttpStatus;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 @SpringBootTest(properties = "spring.main.allow-bean-definition-overriding=true",
+        // use a random port for the REST API
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RwuSpringBootDemoApplicationTests {
+
+    public static final int HTTP_OK = HttpStatus.OK.value();
 
     @Container
     public static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:16");
 
     /**
-     * Prevent DB entries from being created in table student.
+     * Prevent InitDb to create DB entries in table student.
      */
     @MockBean
     private InitDb initDb;
@@ -31,6 +36,9 @@ class RwuSpringBootDemoApplicationTests {
     @TestConfiguration
     static class TestConfig {
 
+        /**
+         * Replace GreetRepository by a fake implementation.
+         */
         @Bean
         @Primary
         GreetRepository greetRepository() {
@@ -41,8 +49,12 @@ class RwuSpringBootDemoApplicationTests {
     @LocalServerPort
     private int port;
 
-    @Autowired
-    TestRestTemplate restTemplate;
+    @BeforeEach
+    public void beforeEach() {
+        // initialize REST Assured to use the random port
+        RestAssured.port = port;
+        RestAssured.baseURI = "http://localhost";
+    }
 
     @Test
     void contextLoads() {
@@ -50,14 +62,15 @@ class RwuSpringBootDemoApplicationTests {
 
     @Test
     void testRepoChangedForTest() {
-        String url = "http://localhost:%s/greet".formatted(port);
 
-        final String json = restTemplate.getForObject(url, String.class);
-
-        assertThat(json).isEqualTo("""
-                {"greeting":"Hello Spring Boot Test!"}"""
-        );
+        given()
+            .when()
+                .get("/greet")
+            .then().assertThat()
+                .statusCode(HTTP_OK)
+                .body("greeting", equalTo("Hello Spring Boot Test!"));
     }
+
 }
 
 /**
