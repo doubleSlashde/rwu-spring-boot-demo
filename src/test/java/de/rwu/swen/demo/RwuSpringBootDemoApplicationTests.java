@@ -24,6 +24,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 class RwuSpringBootDemoApplicationTests {
 
     public static final int HTTP_OK = HttpStatus.OK.value();
+    private static final int HTTP_NOT_FOUND = HttpStatus.NOT_FOUND.value();
 
     @Container
     public static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:16");
@@ -67,7 +68,7 @@ class RwuSpringBootDemoApplicationTests {
         given()
             .when()
                 .get("/greet")
-            .then().assertThat()
+            .then()
                 .statusCode(HTTP_OK)
                 .body("greeting", equalTo("Hello Spring Boot Test!"));
     }
@@ -76,15 +77,31 @@ class RwuSpringBootDemoApplicationTests {
     @Sql("/sql/clear_student_table.sql")
     @Sql("/sql/insert_students.sql")
     void studentsPagination() {
-
+        // page size is configured in test/resources/application.properties
         given()
                 .when()
-                .get("/students?page=0")
-                .then().assertThat()
-                .statusCode(HTTP_OK)
-                .body("content.size()", equalTo(3));
+                    .get("/students?page=0")
+                .then()
+                    .statusCode(HTTP_OK)
+                    .body("content.size()", equalTo(3));
     }
+
+    @Test
+    @Sql("/sql/clear_student_table.sql")
+    @Sql("/sql/insert_students.sql")
+    void notFound() {
+        // Student with ID 0 does not exist in DB
+        // Should be handled by the Rest ErrorHandler
+        given()
+                .when()
+                    .get("/student/0")
+                .then()
+                    .statusCode(HTTP_NOT_FOUND)
+                    .body("errorMsg", equalTo("Student with ID '0' does not exist"));
+    }
+
 }
+
 
 /**
  * Subclass of {@link GreetRepository} which overrides the getGreeting() method.
