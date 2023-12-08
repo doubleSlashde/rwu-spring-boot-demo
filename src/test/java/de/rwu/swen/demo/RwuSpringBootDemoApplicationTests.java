@@ -23,7 +23,7 @@ class RwuSpringBootDemoApplicationTests {
     public static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:16");
 
     /**
-     * Prevent DB entries from being created
+     * Prevent DB entries from being created in table student.
      */
     @MockBean
     private InitDb initDb;
