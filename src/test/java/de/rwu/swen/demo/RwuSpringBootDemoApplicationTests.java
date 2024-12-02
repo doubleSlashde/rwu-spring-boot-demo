@@ -6,14 +6,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.jdbc.Sql;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -26,13 +24,10 @@ class RwuSpringBootDemoApplicationTests {
     public static final int HTTP_OK = HttpStatus.OK.value();
     private static final int HTTP_NOT_FOUND = HttpStatus.NOT_FOUND.value();
 
-    @Container
-    public static PostgreSQLContainer<?> container = new PostgreSQLContainer<>("postgres:16");
-
     /**
-     * Prevent InitDb to create DB entries in table student.
+     * Replace with mock, so that no entries are created in student DB table.
      */
-    @MockBean
+    @MockitoBean
     private InitDb initDb;
 
     @TestConfiguration
@@ -56,10 +51,6 @@ class RwuSpringBootDemoApplicationTests {
         // initialize REST Assured to use the random port
         RestAssured.port = port;
         RestAssured.baseURI = "http://localhost";
-    }
-
-    @Test
-    void contextLoads() {
     }
 
     @Test
