@@ -35,6 +35,7 @@ public class InitDb implements CommandLineRunner {
             s.setLastName(faker.name().lastName());
             s.setStreet(faker.address().streetName());
             s.setHouseNr(faker.address().streetAddressNumber());
+            s.setCity(faker.address().city());
 
             LOGGER.info("Inserting {}", s);
 

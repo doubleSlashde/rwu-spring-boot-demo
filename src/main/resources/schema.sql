@@ -4,7 +4,8 @@ create table if not exists student
     first_name varchar(255),
     last_name  varchar(255),
     street     varchar(255),
-    house_nr   varchar(255)
+    house_nr   varchar(255),
+    city       varchar(255)
 );
 
 alter table student

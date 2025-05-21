@@ -1,10 +1,10 @@
 # RWU Softwareengineering - Spring Boot Demo
 
-Demoprojekt für den Kurs Softwareengineering an der RWU
+Demoprojekt für den Kurs Softwareengineering an der RWU - Softwareentwicklung mit Spring & Spring Boot.
 
 **Voraussetzungen:**
 
-* Java 17
+* Java 21
 * Spring Boot 3
 * Maven 3
 * Docker
@@ -19,7 +19,7 @@ Anwendung bauen:
 
 PostgreSQL in Docker starten:
 
-```docker run --name postgres-rwu -p 5432:5432 -e POSTGRES_PASSWORD=pgsqlpw -d postgres:16```
+```docker run --name postgres-rwu -p 5432:5432 -e POSTGRES_PASSWORD=pgsqlpw -d postgres:17```
 
 Anwendung starten (Projektverzeichnis):
 

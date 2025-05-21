@@ -26,6 +26,9 @@ public class Student {
     @Column(name = "house_nr")
     private String houseNr;
 
+    @Column(name = "city")
+    private String city;
+
     public Long getId() {
         return id;
     }
@@ -66,14 +69,21 @@ public class Student {
         this.houseNr = houseNr;
     }
 
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
     @Override
     public String toString() {
-        return "Student{" +
-                "id=" + id +
+        return "Student{" + "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", street='" + street + '\'' +
                 ", houseNr='" + houseNr + '\'' +
-                '}';
+                ", city='" + city + '\'' + '}';
     }
 }
