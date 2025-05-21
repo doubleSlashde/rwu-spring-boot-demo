@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    List<Student> findByFirstNameOrLastName(String firstName, String lastName);
+    List<Student> findByFirstNameIgnoreCaseOrLastNameIgnoreCase(String firstName, String lastName);
 
     Page<Student> findAllByOrderById(Pageable pageable);
 

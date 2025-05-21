@@ -39,9 +39,9 @@ public class StudentController {
                 .orElseThrow(() -> new NotFoundException(id));
     }
 
-    @GetMapping(path = "/student/search/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(path = "/students/search/{name}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Student> findStudentByName(@PathVariable String name) {
-        return repository.findByFirstNameOrLastName(name, name);
+        return repository.findByFirstNameIgnoreCaseOrLastNameIgnoreCase(name, name);
     }
 
 }

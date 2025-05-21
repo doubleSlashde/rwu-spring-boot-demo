@@ -67,6 +67,20 @@ class RwuSpringBootDemoApplicationTests {
     @Test
     @Sql("/sql/clear_student_table.sql")
     @Sql("/sql/insert_students.sql")
+    void findStudentById() {
+        // Student with ID 0 does not exist in DB
+        // Should be handled by the Rest ErrorHandler
+        given()
+                .when()
+                    .get("/student/1")
+                .then()
+                    .statusCode(HTTP_OK)
+                    .body("firstName", equalTo("Max"));
+    }
+
+    @Test
+    @Sql("/sql/clear_student_table.sql")
+    @Sql("/sql/insert_students.sql")
     void studentsPagination() {
         // page size is configured in test/resources/application.properties
         given()
@@ -75,6 +89,21 @@ class RwuSpringBootDemoApplicationTests {
                 .then()
                     .statusCode(HTTP_OK)
                     .body("content.size()", equalTo(3));
+    }
+
+    @Test
+    @Sql("/sql/clear_student_table.sql")
+    @Sql("/sql/insert_students.sql")
+    void searchStudents() {
+        // find student with first name Ernst
+        given()
+                .when()
+                    .get("/students/search/ernst")
+                .then()
+                    .log().body()
+                    .statusCode(HTTP_OK)
+                    .body("content.size()", equalTo(1))
+                    .body("[0].firstName", equalTo("Ernst"));
     }
 
     @Test
