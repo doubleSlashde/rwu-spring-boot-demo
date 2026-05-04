@@ -4,14 +4,15 @@ Demoprojekt für den Kurs Softwareengineering an der RWU - Softwareentwicklung m
 
 **Voraussetzungen:**
 
-* Java 21
-* Spring Boot 3
+* Java 25
+* Spring Boot 4
 * Maven 3
+* Testcontainers 2
 * Docker
 
 **Bauen und starten**
 
-Alle Befehle sind im Projekt-Wurzelverzeichnis auszuführen.
+Alle Befehle sind im Projekt-Stammverzeichnis auszuführen.
 
 Anwendung bauen:
 
@@ -19,7 +20,7 @@ Anwendung bauen:
 
 PostgreSQL in Docker starten:
 
-```docker run --name postgres-rwu -p 5432:5432 -e POSTGRES_PASSWORD=pgsqlpw -d postgres:17```
+```docker run -d --name postgres-rwu -p 5432:5432 -e POSTGRES_PASSWORD=pgsqlpw postgres:18```
 
 Anwendung starten (Projektverzeichnis):
 
